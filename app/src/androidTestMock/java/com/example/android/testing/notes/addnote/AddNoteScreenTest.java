@@ -23,7 +23,10 @@ import android.support.test.espresso.Espresso;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
+
 import android.support.test.runner.AndroidJUnit4;
+import com.microsoft.appcenter.espresso.Factory;
+import com.microsoft.appcenter.espresso.ReportHelper;
 
 import com.example.android.testing.notes.R;
 
@@ -75,6 +78,10 @@ public class AddNoteScreenTest {
      * idle state. This helps Espresso to synchronize your test actions, which makes tests significantly
      * more reliable.
      */
+
+    @Rule
+    public ReportHelper reportHelper = Factory.getReportHelper();
+
     @Before
     public void registerIdlingResource() {
         Espresso.registerIdlingResources(
@@ -125,6 +132,11 @@ public class AddNoteScreenTest {
     public void unregisterIdlingResource() {
         Espresso.unregisterIdlingResources(
                 mAddNoteIntentsTestRule.getActivity().getCountingIdlingResource());
+    }
+
+    @After
+    public void TearDown(){
+        reportHelper.label("Stopping App");
     }
 
     /**

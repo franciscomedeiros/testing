@@ -18,6 +18,7 @@ package com.example.android.testing.notes.notes;
 
 import com.example.android.testing.notes.R;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +41,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withContentDesc
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
+import com.microsoft.appcenter.espresso.Factory;
+import com.microsoft.appcenter.espresso.ReportHelper;
+
 /**
  * Tests for the {@link DrawerLayout} layout component in {@link NotesActivity} which manages
  * navigation within the app.
@@ -58,6 +62,9 @@ public class AppNavigationTest {
     @Rule
     public ActivityTestRule<NotesActivity> mActivityTestRule =
             new ActivityTestRule<>(NotesActivity.class);
+
+    @Rule
+    public ReportHelper reportHelper = Factory.getReportHelper();
 
     @Test
     public void clickOnStatisticsNavigationItem_ShowsStatisticsScreen() {
@@ -92,4 +99,8 @@ public class AppNavigationTest {
                 .check(matches(isOpen(Gravity.LEFT))); // Left drawer is open open.
     }
 
+    @After
+    public void TearDown(){
+        reportHelper.label("Stopping App");
+    }
 }

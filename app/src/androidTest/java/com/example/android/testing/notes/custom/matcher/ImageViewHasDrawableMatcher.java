@@ -23,6 +23,9 @@ import android.support.test.espresso.matcher.BoundedMatcher;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.microsoft.appcenter.espresso.Factory;
+import com.microsoft.appcenter.espresso.ReportHelper;
+
 /**
  * A custom {@link Matcher} for Espresso that checks if an {@link ImageView} has a drawable applied
  * to it.

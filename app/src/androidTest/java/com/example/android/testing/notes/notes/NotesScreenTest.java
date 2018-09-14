@@ -21,6 +21,7 @@ import com.example.android.testing.notes.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.hamcrest.Matchers.allOf;
+
+import com.microsoft.appcenter.espresso.Factory;
+import com.microsoft.appcenter.espresso.ReportHelper;
 
 /**
  * Tests for the notes screen, the main screen which contains a grid of all notes.
@@ -94,6 +98,9 @@ public class NotesScreenTest {
     public ActivityTestRule<NotesActivity> mNotesActivityTestRule =
             new ActivityTestRule<>(NotesActivity.class);
 
+    @Rule
+    public ReportHelper reportHelper = Factory.getReportHelper();
+
     @Test
     public void clickAddNoteButton_opensAddNoteUi() throws Exception {
         // Click on the add note button
@@ -126,6 +133,11 @@ public class NotesScreenTest {
 
         // Verify note is displayed on screen
         onView(withItemText(newNoteDescription)).check(matches(isDisplayed()));
+    }
+
+    @After
+    public void TearDown(){
+        reportHelper.label("Stopping App");
     }
 
 }

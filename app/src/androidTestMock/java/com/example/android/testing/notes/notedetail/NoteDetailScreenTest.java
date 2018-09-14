@@ -32,6 +32,8 @@ import android.support.test.espresso.Espresso;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import com.microsoft.appcenter.espresso.Factory;
+import com.microsoft.appcenter.espresso.ReportHelper;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -75,6 +77,9 @@ public class NoteDetailScreenTest {
     public ActivityTestRule<NoteDetailActivity> mNoteDetailActivityTestRule =
             new ActivityTestRule<>(NoteDetailActivity.class, true /* Initial touch mode  */,
                     false /* Lazily launch activity */);
+
+    @Rule
+    public ReportHelper reportHelper = Factory.getReportHelper();
 
     /**
      * Setup your test fixture with a fake note id. The {@link NoteDetailActivity} is started with
@@ -125,5 +130,10 @@ public class NoteDetailScreenTest {
     private void registerIdlingResource() {
         Espresso.registerIdlingResources(
                 mNoteDetailActivityTestRule.getActivity().getCountingIdlingResource());
+    }
+
+    @After
+    public void TearDown(){
+        reportHelper.label("Stopping App");
     }
 }
